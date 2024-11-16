@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <title>Página de Pago | Tienda de Ropa</title>
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}"/>
+</head>
+<body>
+<main class="container">
+    <div class="main">
+        <!-- Sección de Método de Pago -->
+        <section class="payment_method">
+            <h2 class="ship_head">Método de Pago</h2>
+            <div class="card_info">
+                <form id="payment-form" action="{% url 'payment' %}" method="post">
+                    {% csrf_token %}
+                    <div class="card_head">
+                        <h2 class="card_title">Detalles del Pago</h2>
+                    </div>
+                    <input type="hidden" name="total" value="{{total}}"/> <!-- Campo oculto para el total -->
+                    <input type="hidden" name="discounted" value="{{discounted}}"/> <!-- Campo oculto para el total descontado -->
+                    <input type="hidden" name="deduction" value="{{deduction}}"/> <!-- Campo oculto para la deducción -->
+                    <input type="text" id="holder_name" name="holder_name" placeholder="Nombre Completo" maxlength="60" required />
+                    <input type="email" name="email" placeholder="Correo Electrónico" required />
+                    <div class="total_price">
+                        <p class="dark">Total a Pagar:</p>
+                        <p id="total" class="dark">Rs.{{discounted}}</p>
+                    </div>
+                    <button type="submit" class="confirm_btn">Confirmar Pago</button>
+                </form>
+            </div>
+        </section>
+        <!-- Sección de Resumen del Pedido -->
+        <section class="order_summary">
+            <h2 class="order_head">Resumen del Pedido</h2>
+            <div class="order_price">
+                <hr />
+                <div class="price">
+                    <p>Precio del Pedido:</p>
+                    <p>Rs.{{total}}</p>
+                </div>
+                <div class="price">
+                    <p>Descuento:</p>
+                    <p>Rs.{{deduction}}</p>
+                </div>
+                <div class="price">
+                    <p>Envío:</p>
+                    <p>0.00</p>
+                </div>
+                <div class="price">
+                    <p>Impuesto:</p>
+                    <p>0.00</p>
+                </div>
+                <br />
+                <hr />
+                <div class="total_price">
+                    <p class="dark">Total:</p>
+                    <p id="total" class="dark">Rs.{{discounted}}</p>
+                </div>
+            </div>
+            <img class="qr_code" src="https://cdn-icons-png.flaticon.com/512/714/714390.png" alt="" />
+            <p class="condition">
+                Pague y confirme el pedido mediante código QR usando <b>Aplicación Móvil</b>
+            </p>
+        </section>
+    </div>
+</main>
+</body>
+</html>
